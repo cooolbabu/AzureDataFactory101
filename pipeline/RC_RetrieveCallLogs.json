@@ -39,11 +39,18 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "Get Call Logs",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Get Access Token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
-					"timeout": "0.12:00:00",
+					"timeout": "0.0:00:45",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -51,8 +58,45 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"additionalHeaders": {
+							"Authorization": {
+								"value": "Bearer @{activity('Get Access Token').output}",
+								"type": "Expression"
+							}
+						},
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "StoreCallLogs",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"parameters": {

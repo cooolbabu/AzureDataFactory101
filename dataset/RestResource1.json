@@ -1,0 +1,18 @@
+{
+	"name": "RestResource1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RC_GetCallLogsRestService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "restapi/v1.0/account/812947005/extension/812947005/call-log?view=Simple&showBlocked=true&withRecording=false&dateFrom=2023-08-24T00:00:00.000Z&page=1&perPage=100&dateTo=2023-08-27T23:00:00.000Z",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
