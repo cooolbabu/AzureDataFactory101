@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "@{pipeline().parameters.baseUrl}/restapi/oauth/token",
+			"url": "@{pipeline().parameters.baseUrl}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
