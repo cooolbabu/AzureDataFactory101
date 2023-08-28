@@ -1,0 +1,51 @@
+{
+	"name": "RC_RetrieveCallLogs",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Access Token",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.0:00:45",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@{pipeline().parameters.baseUrl}/restapi/oauth/token",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"authentication": {
+						"type": "Basic",
+						"username": "791ADVYBjvIbBAbIJOE4sO",
+						"password": {
+							"type": "AzureKeyVaultSecret",
+							"store": {
+								"referenceName": "AzureKeyVault1",
+								"type": "LinkedServiceReference"
+							},
+							"secretName": "rc-ClientSecret"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"baseUrl": {
+				"type": "String",
+				"defaultValue": "https://platform.devtest.ringcentral.com"
+			}
+		},
+		"variables": {
+			"baseUrl": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
