@@ -90,7 +90,6 @@
 						"referenceName": "RestResource2",
 						"type": "DatasetReference",
 						"parameters": {
-							"xDateFrom": "2009",
 							"dsDateFrom": {
 								"value": "@pipeline().parameters.dateFrom",
 								"type": "Expression"

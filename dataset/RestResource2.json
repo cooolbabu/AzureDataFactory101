@@ -6,10 +6,6 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"xDateFrom": {
-				"type": "String",
-				"defaultValue": "2009"
-			},
 			"dsDateFrom": {
 				"type": "String",
 				"defaultValue": "2023-08-24T00:00:00.000Z"
