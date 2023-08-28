@@ -1,0 +1,12 @@
+{
+	"name": "RC_GetCallLogsRestService",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://platform.devtest.ringcentral.com",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
