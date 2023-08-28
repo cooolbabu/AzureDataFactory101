@@ -1,0 +1,24 @@
+{
+	"name": "RestResource2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RC_GetCallLogsRestService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"xDateFrom": {
+				"type": "String",
+				"defaultValue": "2009"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().xDateFrom",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}

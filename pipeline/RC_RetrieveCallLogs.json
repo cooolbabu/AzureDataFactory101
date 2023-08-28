@@ -65,7 +65,7 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Authorization": {
-								"value": "Bearer @{activity('Get Access Token').output}",
+								"value": "Bearer @{activity('Get Access Token').output.access_token}",
 								"type": "Expression"
 							}
 						},
