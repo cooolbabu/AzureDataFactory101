@@ -1,0 +1,19 @@
+{
+	"name": "StoreCallLogs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RingCentralDataBS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "RC_CallLogs.json",
+				"container": "staging"
+			}
+		},
+		"schema": {}
+	}
+}
