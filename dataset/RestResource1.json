@@ -9,13 +9,17 @@
 			"asd": {
 				"type": "string",
 				"defaultValue": "  "
+			},
+			"dsDateFrom": {
+				"type": "String",
+				"defaultValue": "2023-08-24T00:00:00.000Z"
 			}
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "restapi/v1.0/account/812947005/extension/812947005/call-log?view=Simple&showBlocked=true&withRecording=false&dateFrom=2023-08-24T00:00:00.000Z&page=1&perPage=100&dateTo=2023-08-27T23:00:00.000Z@{dataset().asd}",
+				"value": "@restapi/v1.0/account/812947005/extension/812947005/call-log?view=Simple&showBlocked=true&withRecording=false&dateFrom=2023-08-24T00:00:00.000Z&page=1&perPage=100&dataset().dsDateFrom",
 				"type": "Expression"
 			}
 		},
