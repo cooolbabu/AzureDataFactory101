@@ -1,0 +1,197 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"AzureKeyVault1": {
+			"type": "string"
+		},
+		"RC_GetCallLogsRestService": {
+			"type": "string"
+		},
+		"RingCentralDataBS": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/RC_RetrieveCallLogs')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Access Token",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.0:00:45",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{pipeline().parameters.baseUrl}/restapi/oauth/token",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							"body": "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&access_token_ttl=3600&assertion=eyJraWQiOiI4NzYyZjU5OGQwNTk0NGRiODZiZjVjYTk3ODA0NzYwOCIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJhdWQiOiJodHRwczovL3BsYXRmb3JtLmRldnRlc3QucmluZ2NlbnRyYWwuY29tL3Jlc3RhcGkvb2F1dGgvdG9rZW4iLCJzdWIiOiI4MTI5NDcwMDUiLCJpc3MiOiJodHRwczovL3BsYXRmb3JtLmRldnRlc3QucmluZ2NlbnRyYWwuY29tIiwiZXhwIjoxNjk2MTE4Mzk5LCJpYXQiOjE2OTI5Mjc2NzcsImp0aSI6InMwVXJYbk1fUjlhSkVGWnQ5N1lMcXcifQ.LTdRU-59CiQDoiMsYNc80OyRfAdzuJ08w6cJ21-unSSiK8fpkdSMZB790qo08ZvLEWjSfGXII7-cOaozN6d7WGAfJ0ZGDkU_t2RA6VDUwAFuEK1dIS-kTbqZbpU_BCkZ-chHZMcxIbicCYqy4zWDIWKePbVbMYiVJvaJpJNSLp4l0ZgSaRmLG-5k9hnju8vtV8nVoRjFVo4Iu-_c2SJmAy3tu_lbfjOBv1Mm7dZHDXa8WqQXahw5AraSnO7zAAMW6jv50NVrgvLLDCfR0s1Nj8MuclVV1BDXAJK_jCB2EPzHMjlpsgkV5PXh_N4v6V95IvNAv7W8inpA3hqOOZOEvg",
+							"authentication": {
+								"type": "Basic",
+								"username": "791ADVYBjvIbBAbIJOE4sO",
+								"password": {
+									"type": "AzureKeyVaultSecret",
+									"store": {
+										"referenceName": "[parameters('AzureKeyVault1')]",
+										"type": "LinkedServiceReference"
+									},
+									"secretName": "rc-ClientSecret"
+								}
+							}
+						}
+					},
+					{
+						"name": "Get Call Logs",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Get Access Token",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.0:00:45",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Authorization": {
+										"value": "Bearer @{activity('Get Access Token').output.access_token}",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings",
+									"copyBehavior": "MergeFiles"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "RestResource1",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "StoreCallLogs",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"parameters": {
+					"baseUrl": {
+						"type": "String",
+						"defaultValue": "https://platform.devtest.ringcentral.com"
+					},
+					"dateFrom": {
+						"type": "string",
+						"defaultValue": "2023-08-24T00:00:00.000Z"
+					},
+					"dateTo": {
+						"type": "string",
+						"defaultValue": "2023-08-27T00:00:00.000Z"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
+				"[concat(variables('factoryId'), '/datasets/StoreCallLogs')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestResource1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('RC_GetCallLogsRestService')]",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"asd": {
+						"type": "string",
+						"defaultValue": "  "
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "restapi/v1.0/account/812947005/extension/812947005/call-log?view=Simple&showBlocked=true&withRecording=false&dateFrom=2023-08-24T00:00:00.000Z&page=1&perPage=100&dateTo=2023-08-27T23:00:00.000Z@{dataset().asd}",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StoreCallLogs')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('RingCentralDataBS')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "RC_CallLogs.json",
+						"container": "staging"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		}
+	]
+}
