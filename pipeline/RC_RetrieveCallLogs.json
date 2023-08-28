@@ -85,6 +85,23 @@
 					},
 					"enableStaging": false
 				},
+				"inputs": [
+					{
+						"referenceName": "RestResource2",
+						"type": "DatasetReference",
+						"parameters": {
+							"xDateFrom": "2009",
+							"dsDateFrom": {
+								"value": "@pipeline().parameters.dateFrom",
+								"type": "Expression"
+							},
+							"dsDateTo": {
+								"value": "@pipeline().parameters.dateTo",
+								"type": "Expression"
+							}
+						}
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "StoreCallLogs",
