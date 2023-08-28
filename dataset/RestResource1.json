@@ -5,6 +5,11 @@
 			"referenceName": "RC_GetCallLogsRestService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"asd": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
