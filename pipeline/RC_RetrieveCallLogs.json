@@ -42,11 +42,6 @@
 				"defaultValue": "https://platform.devtest.ringcentral.com"
 			}
 		},
-		"variables": {
-			"baseUrl": {
-				"type": "String"
-			}
-		},
 		"annotations": []
 	}
 }
