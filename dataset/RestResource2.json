@@ -11,7 +11,8 @@
 				"defaultValue": "2023-08-24T00:00:00.000Z"
 			},
 			"dsDateTo": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "2023-08-27T00:00:00.000Z"
 			}
 		},
 		"annotations": [],
