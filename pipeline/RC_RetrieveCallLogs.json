@@ -20,6 +20,9 @@
 						"type": "Expression"
 					},
 					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
 					"body": "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&access_token_ttl=3600&assertion=eyJraWQiOiI4NzYyZjU5OGQwNTk0NGRiODZiZjVjYTk3ODA0NzYwOCIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJhdWQiOiJodHRwczovL3BsYXRmb3JtLmRldnRlc3QucmluZ2NlbnRyYWwuY29tL3Jlc3RhcGkvb2F1dGgvdG9rZW4iLCJzdWIiOiI4MTI5NDcwMDUiLCJpc3MiOiJodHRwczovL3BsYXRmb3JtLmRldnRlc3QucmluZ2NlbnRyYWwuY29tIiwiZXhwIjoxNjk2MTE4Mzk5LCJpYXQiOjE2OTI5Mjc2NzcsImp0aSI6InMwVXJYbk1fUjlhSkVGWnQ5N1lMcXcifQ.LTdRU-59CiQDoiMsYNc80OyRfAdzuJ08w6cJ21-unSSiK8fpkdSMZB790qo08ZvLEWjSfGXII7-cOaozN6d7WGAfJ0ZGDkU_t2RA6VDUwAFuEK1dIS-kTbqZbpU_BCkZ-chHZMcxIbicCYqy4zWDIWKePbVbMYiVJvaJpJNSLp4l0ZgSaRmLG-5k9hnju8vtV8nVoRjFVo4Iu-_c2SJmAy3tu_lbfjOBv1Mm7dZHDXa8WqQXahw5AraSnO7zAAMW6jv50NVrgvLLDCfR0s1Nj8MuclVV1BDXAJK_jCB2EPzHMjlpsgkV5PXh_N4v6V95IvNAv7W8inpA3hqOOZOEvg",
 					"authentication": {
 						"type": "Basic",
