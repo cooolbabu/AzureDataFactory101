@@ -9,13 +9,20 @@
 			"xDateFrom": {
 				"type": "String",
 				"defaultValue": "2009"
+			},
+			"dsDateFrom": {
+				"type": "String",
+				"defaultValue": "2023-08-24T00:00:00.000Z"
+			},
+			"dsDateTo": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "@dataset().xDateFrom",
+				"value": "restapi/v1.0/account/~/extension/~/call-log?view=Simple&showBlocked=true&withRecording=false&perPage=100&page=1&dateFrom=@{dataset().dsDateFrom}&dateTo=@{dataset().dsDateTo}",
 				"type": "Expression"
 			}
 		},
